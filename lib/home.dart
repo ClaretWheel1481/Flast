@@ -48,6 +48,11 @@ class HomeState extends State<Home> {
             SizedBox(
               width: 40,
               height: 40,
+              child: MaximizeWindowButton(),
+            ),
+            SizedBox(
+              width: 40,
+              height: 40,
               child: CloseWindowButton(),
             ),
           ],

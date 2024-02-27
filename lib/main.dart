@@ -3,10 +3,10 @@ import 'package:flast/start.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 
   doWhenWindowReady(() {
-    appWindow.minSize = Size(1080,680);
+    appWindow.minSize = const Size(960,680);
     appWindow.alignment = Alignment.center;
     appWindow.show();
   });

@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FluentApp(
       title: 'Flast',
-      home: Home(),
+      home: const Home(),
       theme: FluentThemeData(
         brightness: Brightness.light,
         fontFamily: "MSYH",
