@@ -1,0 +1,2 @@
+String partitionName = "";
+String applicationPackageName = "";

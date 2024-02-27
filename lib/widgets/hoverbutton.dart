@@ -1,5 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flast/homepage.dart';
+import 'package:flast/functions.dart';
 
 class CustomHoverButton extends StatefulWidget {
   final String title;

@@ -1,6 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:desktop_drop/desktop_drop.dart';
-import 'package:flast/homepage.dart';
+import 'package:flast/functions.dart';
 
 class DropTargetSpace extends StatefulWidget {
   final OnDragDoneCallback onDragDone;
@@ -32,12 +32,12 @@ class _DropTargetSpaceState extends State<DropTargetSpace> {
                 ),
                 constraints: const BoxConstraints(maxHeight: 200),
                 padding: const EdgeInsets.all(5),
-                child: const Center(child: Text("将文件拖入",style: TextStyle(fontSize: 20),),),
+                child: const Center(child: Text("拖入文件",style: TextStyle(fontSize: 20))),
               ),
         ),
         Container(
           padding: const EdgeInsets.all(20),
-          child: const Text("Or")
+          child: const Text("OR")
         ),
         TextBox(
           placeholder: "文件完整路径",
