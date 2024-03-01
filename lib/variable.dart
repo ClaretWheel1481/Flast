@@ -6,7 +6,8 @@ class variableController extends GetxController {
   ].obs;
   
   var partitionName = "".obs;
-  var applicationPackageName = "".obs;
+  var uninstallApplicationPackageName = "".obs;
+  var installApplicationPackageName = "".obs;
 }
 
 

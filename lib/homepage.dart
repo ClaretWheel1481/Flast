@@ -4,6 +4,7 @@ import 'package:flast/widgets/hoverbutton.dart';
 import 'package:flast/functions.dart';
 import 'package:flast/variable.dart';
 import 'package:get/get.dart';
+import 'package:cross_file/cross_file.dart';
 
 variableController variablecon = variableController();
 
@@ -108,17 +109,22 @@ class HomepageState extends State<Homepage> {
                                     title: const Text('选择载入方式'),
                                     content: DropTargetSpace(
                                       onChanged: (value) {
-                                        
+                                        variablecon.installApplicationPackageName.value = value;
                                       },
                                       onDragDone: (details) {
-                                        
+                                        List<XFile> files = details.files;
+                                        //遍历文件列表
+                                        for(XFile file in files) {
+                                          variablecon.installApplicationPackageName.value = file.path;
+                                        }
+                                        adbInstall();
                                       },
                                     ),
                                     actions: [
                                       Button(
                                         child: const Text('确认'),
                                         onPressed: () {
-                                          //TODO: 文件拖入路径后执行ADB INSTALL
+                                          adbInstall();
                                           Navigator.pop(context);
                                         },
                                       ),
@@ -141,7 +147,7 @@ class HomepageState extends State<Homepage> {
                                         TextBox(
                                           placeholder: "应用完整包名",
                                           onChanged: (value){
-                                            variablecon.applicationPackageName.value = value;
+                                            variablecon.uninstallApplicationPackageName.value = value;
                                           },
                                         ),
                                     ],),
@@ -149,7 +155,8 @@ class HomepageState extends State<Homepage> {
                                       Button(
                                         child: const Text('确认'),
                                         onPressed: () {
-                                          //TODO: 根据包名卸载
+                                          //TODO:错误处理待处理
+                                          adbUninstall();
                                           Navigator.pop(context);
                                         },
                                       ),

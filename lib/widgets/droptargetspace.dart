@@ -2,6 +2,8 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:flast/functions.dart';
 
+//自定义DropTargetSpace
+
 class DropTargetSpace extends StatefulWidget {
   final OnDragDoneCallback onDragDone;
   final ValueChanged<String> onChanged;
@@ -22,7 +24,7 @@ class _DropTargetSpaceState extends State<DropTargetSpace> {
       children: [
         DropTarget(
           onDragDone:(details) {
-            widget.onDragDone;
+            widget.onDragDone(details);
             Navigator.pop(context);
           },
           child: Container(
@@ -42,7 +44,7 @@ class _DropTargetSpaceState extends State<DropTargetSpace> {
         TextBox(
           placeholder: "文件完整路径",
           onChanged: (value){
-            widget.onChanged;
+            widget.onChanged(value);
           },
         ),
     ],);
