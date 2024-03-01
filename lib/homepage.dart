@@ -3,6 +3,9 @@ import 'package:flast/widgets/droptargetspace.dart';
 import 'package:flast/widgets/hoverbutton.dart';
 import 'package:flast/functions.dart';
 import 'package:flast/variable.dart';
+import 'package:get/get.dart';
+
+variableController variablecon = variableController();
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -40,14 +43,20 @@ class HomepageState extends State<Homepage> {
                           Row(
                             children: [
                               CustomHoverButton(title: "查看已连接的设备", onTap: (){
+                                adbDevices();
                                 showDialog(
                                   context: context,
                                   builder: (context) => ContentDialog(
                                     title: const Text('已连接的设备'),
-                                    content: const Column(
+                                    content: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-
+                                        Obx(()=>
+                                          Text(
+                                            variablecon.connectedDevices.join('\n'),
+                                            style: const TextStyle(fontSize: 18),
+                                          )
+                                        )
                                       ],
                                     ),
                                     actions: [
@@ -132,7 +141,7 @@ class HomepageState extends State<Homepage> {
                                         TextBox(
                                           placeholder: "应用完整包名",
                                           onChanged: (value){
-                                            applicationPackageName = value;
+                                            variablecon.applicationPackageName.value = value;
                                           },
                                         ),
                                     ],),
@@ -231,7 +240,7 @@ class HomepageState extends State<Homepage> {
                                         TextBox(
                                           placeholder: "分区名",
                                           onChanged: (value){
-                                            partitionName = value;
+                                            variablecon.partitionName.value = value;
                                           },
                                         ),
                                     ],),
@@ -239,7 +248,7 @@ class HomepageState extends State<Homepage> {
                                       Button(
                                         child: const Text('确认'),
                                         onPressed: () {
-                                          if(partitionName == ""){
+                                          if(variablecon.partitionName.value == ""){
                                             showDialog(
                                               context: context,
                                               builder: (context) => ContentDialog(
@@ -256,7 +265,7 @@ class HomepageState extends State<Homepage> {
                                                     child: const Text('关闭'),
                                                     onPressed: () {
                                                       Navigator.pop(context);
-                                                      partitionName = "";
+                                                      variablecon.partitionName.value = "";
                                                     },
                                                   ),
                                                 ],
@@ -282,13 +291,13 @@ class HomepageState extends State<Homepage> {
                                                     onPressed: () {
                                                       //TODO: 文件拖入路径后执行FASTBOOT flash *** ***
                                                       Navigator.pop(context);
-                                                      partitionName = "";
+                                                      variablecon.partitionName.value = "";
                                                     },
                                                   ),
                                                   Button(
                                                     child: const Text('取消'),
                                                     onPressed: () {
-                                                      partitionName = "";
+                                                      variablecon.partitionName.value = "";
                                                       Navigator.pop(context);
                                                     },
                                                   ),
@@ -301,7 +310,7 @@ class HomepageState extends State<Homepage> {
                                       Button(
                                         child: const Text('取消'),
                                         onPressed: () {
-                                          partitionName = "";
+                                          variablecon.partitionName.value = "";
                                           Navigator.pop(context);
                                         },
                                       ),
