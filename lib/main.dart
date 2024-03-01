@@ -6,7 +6,7 @@ void main() {
   runApp(const MyApp());
 
   doWhenWindowReady(() {
-    appWindow.minSize = const Size(960,680);
+    appWindow.minSize = const Size(1280,720);
     appWindow.alignment = Alignment.center;
     appWindow.show();
   });
