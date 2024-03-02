@@ -90,7 +90,7 @@ Future adbInstall() async{
 }
 
 //adb sideload ***命令执行方法
-Future<String> adbSideload() async{
+Future adbSideload() async{
   var output = "";
   //根据系统不同更换工具路径
   var adbPath = "";
@@ -106,7 +106,6 @@ Future<String> adbSideload() async{
     output = utf8.decode(utf8.encode(result[0].stdout));
   }
   variableCtrl.sideloadOutput.value = output;
-  return variableCtrl.sideloadOutput.value;
 }
 
 //FASTBOOT DEVICES命令执行方法

@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flast/widgets/droptargetspace.dart';
 import 'package:flast/widgets/hoverbutton.dart';
@@ -6,7 +7,7 @@ import 'package:flast/variable.dart';
 import 'package:get/get.dart';
 import 'package:cross_file/cross_file.dart';
 
-variableController variableCtrl = variableController();
+VariableController variableCtrl = VariableController();
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
