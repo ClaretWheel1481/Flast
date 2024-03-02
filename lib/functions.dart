@@ -5,13 +5,19 @@ import 'dart:convert';
 import 'package:flast/homepage.dart';
 import 'dart:io';
 
-//不同系统的adb工具路径
+//不同系统的工具路径
+
 //TODO:构建时需修改
+
 // const windowsAdbPath = "data/flutter_assets/assets/tools/windows/adb.exe";
 // const linuxAdbPath = "data/flutter_assets/assets/tools/linux/adb.exe";
+// const windowsFastbootPath = "data/flutter_assets/assets/tools/windows/fastboot.exe";
+// const linuxFastbootPath = "data/flutter_assets/assets/tools/linux/fastboot";
 
 const windowsAdbPath = "assets/tools/windows/adb.exe";
-const linuxAdbPath = "assets/tools/linux/adb.exe";
+const linuxAdbPath = "assets/tools/linux/adb";
+const windowsFastbootPath = "assets/tools/windows/fastboot.exe";
+const linuxFastbootPath = "assets/tools/linux/fastboot";
 
 //点击跳转Github
 Future loadURL() async{
@@ -36,11 +42,11 @@ Future adbDevices() async{
     adbPath = windowsAdbPath;
   }
   //执行ADB DEVICES
-  variableCtrl.connectedDevices.clear();
+  variableCtrl.adbConnectedDevices.clear();
   final result = await run('$adbPath "devices"');
   final output = utf8.decode(utf8.encode(result[0].stdout));
   final lines = output.trim().split('\n');
-  variableCtrl.connectedDevices.addAll(lines.sublist(1));
+  variableCtrl.adbConnectedDevices.addAll(lines.sublist(1));
 }
 
 //adb uninstall ***命令执行方法
@@ -60,12 +66,7 @@ Future adbUninstall() async{
   }else{
     output = utf8.decode(utf8.encode(result[0].stdout));
   }
-  print(output);
-  if(output == "Success"){
-    //TODO:功能实现后反馈待处理
-  }else{
-    //TODO:功能未实现错误反馈待处理 
-  }
+  variableCtrl.uninstallOutput.value = output;
 }
 
 //adb install ***命令执行方法
@@ -85,16 +86,11 @@ Future adbInstall() async{
   }else{
     output = utf8.decode(utf8.encode(result[0].stdout));
   }
-  print(output);
-  if(output == "Success"){
-    //TODO:功能实现后反馈待处理
-  }else{
-    //TODO:功能未实现错误反馈待处理 
-  }
+  variableCtrl.installOutput.value = output;
 }
 
 //adb sideload ***命令执行方法
-Future adbSideload() async{
+Future<String> adbSideload() async{
   var output = "";
   //根据系统不同更换工具路径
   var adbPath = "";
@@ -109,10 +105,23 @@ Future adbSideload() async{
   }else{
     output = utf8.decode(utf8.encode(result[0].stdout));
   }
-  print(output);
-  if(output == "Success"){
-    //TODO:功能实现后反馈待处理
-  }else{
-    //TODO:功能未实现错误反馈待处理 
+  variableCtrl.sideloadOutput.value = output;
+  return variableCtrl.sideloadOutput.value;
+}
+
+//FASTBOOT DEVICES命令执行方法
+Future fbDevices() async{
+  //根据系统不同更换工具路径
+  var fbPath = "";
+  if (Platform.isLinux) {
+    fbPath = linuxFastbootPath;
+  } else if (Platform.isWindows) {
+    fbPath = windowsFastbootPath;
   }
+  //执行FASTBOOT DEVICES
+  variableCtrl.fbConnectedDevices.clear();
+  final result = await run('$fbPath "devices"');
+  final output = utf8.decode(utf8.encode(result[0].stdout));
+  final lines = output.trim().split('\n');
+  variableCtrl.fbConnectedDevices.addAll(lines.sublist(1));
 }

@@ -1,7 +1,11 @@
 import 'package:get/get.dart';
 
 class variableController extends GetxController {
-  List<dynamic> connectedDevices = [
+  List<dynamic> adbConnectedDevices = [
+
+  ].obs;
+
+  List<dynamic> fbConnectedDevices = [
 
   ].obs;
   
@@ -9,6 +13,10 @@ class variableController extends GetxController {
   var uninstallApplicationPackageName = "".obs;
   var installApplicationPackageName = "".obs;
   var adbSideloadFilePath = "".obs;
+
+  var uninstallOutput = "".obs;
+  var installOutput = "".obs;
+  var sideloadOutput = "".obs;
 }
 
 

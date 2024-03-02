@@ -54,7 +54,7 @@ class HomepageState extends State<Homepage> {
                                       children: [
                                         Obx(()=>
                                           Text(
-                                            variableCtrl.connectedDevices.join('\n'),
+                                            variableCtrl.adbConnectedDevices.join('\n'),
                                             style: const TextStyle(fontSize: 18),
                                           )
                                         )
@@ -86,16 +86,24 @@ class HomepageState extends State<Homepage> {
                                         for(XFile file in files) {
                                           variableCtrl.adbSideloadFilePath.value = file.path;
                                         }
-                                        adbSideload();
+                                        Future doSideload() async{
+                                          await adbSideload();
+                                          Navigator.pop(context);
+                                          showCustomDialog(variableCtrl.sideloadOutput.value);
+                                        }
+                                        doSideload();
                                       },
                                     ),
                                     actions: [
                                       Button(
                                         child: const Text('确认'),
                                         onPressed: () {
-                                          //TODO:错误处理待完善
-                                          adbSideload();
-                                          Navigator.pop(context);
+                                          Future doSideload() async{
+                                            await adbSideload();
+                                            Navigator.pop(context);
+                                            showCustomDialog(variableCtrl.sideloadOutput.value);
+                                          }
+                                          doSideload();
                                         },
                                       ),
                                       Button(
@@ -127,16 +135,24 @@ class HomepageState extends State<Homepage> {
                                         for(XFile file in files) {
                                           variableCtrl.installApplicationPackageName.value = file.path;
                                         }
-                                        adbInstall();
+                                        Future doInstall() async{
+                                          await adbInstall();
+                                          Navigator.pop(context);
+                                          showCustomDialog(variableCtrl.installOutput.value);
+                                        }
+                                        doInstall();
                                       },
                                     ),
                                     actions: [
                                       Button(
                                         child: const Text('确认'),
                                         onPressed: () {
-                                          //TODO:错误处理待完善
-                                          adbInstall();
-                                          Navigator.pop(context);
+                                          Future doInstall() async{
+                                            await adbInstall();
+                                            Navigator.pop(context);
+                                            showCustomDialog(variableCtrl.installOutput.value);
+                                          }
+                                          doInstall();
                                         },
                                       ),
                                       Button(
@@ -168,9 +184,12 @@ class HomepageState extends State<Homepage> {
                                       Button(
                                         child: const Text('确认'),
                                         onPressed: () {
-                                          //TODO:错误处理待完善
-                                          adbUninstall();
-                                          Navigator.pop(context);
+                                          Future doUninstall() async{
+                                            await adbUninstall();
+                                            Navigator.pop(context);
+                                            showCustomDialog(variableCtrl.uninstallOutput.value);
+                                          }
+                                          doUninstall();
                                         },
                                       ),
                                       Button(
@@ -183,6 +202,51 @@ class HomepageState extends State<Homepage> {
                               })
                             ],
                           ),
+                          Row(
+                            children: [
+                              CustomHoverButton(title: "重启", onTap: (){
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => ContentDialog(
+                                    title: const Text('重启选项'),
+                                    content: Row(
+                                      children: [
+                                        Button(
+                                          child: const Text('Recovery'),
+                                            onPressed: () {
+                                              //TODO: 重启至Recovery
+                                              Navigator.pop(context);
+                                            },
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Button(
+                                          child: const Text('System'),
+                                            onPressed: () {
+                                              //TODO: 重启至系统
+                                              Navigator.pop(context);
+                                            },
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Button(
+                                          child: const Text('Bootloader'),
+                                            onPressed: () {
+                                              //TODO: 重启至Bootloader
+                                              Navigator.pop(context);
+                                            },
+                                        ),
+                                      ],
+                                    ),
+                                    actions: [
+                                      Button(
+                                        child: const Text('关闭'),
+                                        onPressed: () => Navigator.pop(context),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              })
+                            ],
+                          )
                         ]
                     ),
                   ),
@@ -200,14 +264,20 @@ class HomepageState extends State<Homepage> {
                           Row(
                             children: [
                               CustomHoverButton(title: "查看已连接的设备", onTap: (){
+                                fbDevices();
                                 showDialog(
                                   context: context,
                                   builder: (context) => ContentDialog(
                                     title: const Text('已连接的设备'),
-                                    content: const Column(
+                                    content: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-
+                                        Obx(()=>
+                                          Text(
+                                            variableCtrl.fbConnectedDevices.join('\n'),
+                                            style: const TextStyle(fontSize: 18),
+                                          )
+                                        )
                                       ],
                                     ),
                                     actions: [
@@ -385,6 +455,26 @@ class HomepageState extends State<Homepage> {
             ],
           ),
         ]
+    );
+  }
+  void showCustomDialog(String output){
+    showDialog(
+      context: context, 
+      builder: (context) => ContentDialog(
+        title: const Text('通知'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(output,style: const TextStyle(fontSize: 18),)
+          ],
+        ),
+        actions: [
+          Button(
+            child: const Text('关闭'),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
     );
   }
 }

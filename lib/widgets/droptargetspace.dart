@@ -25,17 +25,16 @@ class _DropTargetSpaceState extends State<DropTargetSpace> {
         DropTarget(
           onDragDone:(details) {
             widget.onDragDone(details);
-            Navigator.pop(context);
           },
           child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: isDarkMode(context) ? Colors.white : Colors.grey,width: 0.5),
-                  borderRadius: const BorderRadius.all(Radius.circular(15))
-                ),
-                constraints: const BoxConstraints(maxHeight: 200),
-                padding: const EdgeInsets.all(5),
-                child: const Center(child: Text("拖入文件",style: TextStyle(fontSize: 20))),
-              ),
+            decoration: BoxDecoration(
+              border: Border.all(color: isDarkMode(context) ? Colors.white : Colors.grey,width: 0.5),
+              borderRadius: const BorderRadius.all(Radius.circular(15))
+            ),
+            constraints: const BoxConstraints(maxHeight: 200),
+            padding: const EdgeInsets.all(5),
+            child: const Center(child: Text("拖入文件",style: TextStyle(fontSize: 20))),
+          ),
         ),
         Container(
           padding: const EdgeInsets.all(20),
