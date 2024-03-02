@@ -124,3 +124,22 @@ Future fbDevices() async{
   final lines = output.trim().split('\n');
   variableCtrl.fbConnectedDevices.addAll(lines.sublist(1));
 }
+
+//FASTBOOT FLASH ** **命令执行方法
+Future fbFlashFile() async{
+  var output = "";
+  //根据系统不同更换工具路径
+  var fbPath = "";
+  if (Platform.isLinux) {
+    fbPath = linuxFastbootPath;
+  } else if (Platform.isWindows) {
+    fbPath = windowsFastbootPath;
+  }
+  final result = await run('$fbPath "flash" ${variableCtrl.partitionName} ${variableCtrl.fbFlashFilePath}',throwOnError: false);
+  if(result[0].stdout == ""){
+    output = utf8.decode(utf8.encode(result[0].stderr));
+  }else{
+    output = utf8.decode(utf8.encode(result[0].stdout));
+  }
+  variableCtrl.fbFlashOutput.value = output;
+}

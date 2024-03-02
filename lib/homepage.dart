@@ -370,18 +370,36 @@ class HomepageState extends State<Homepage> {
                                                 title: const Text('选择载入方式'),
                                                 content: DropTargetSpace(
                                                   onChanged: (value) {
-                                                    //TODO: 文件拖入路径后执行FASTBOOT flash *** ***
+                                                    variableCtrl.fbFlashFilePath.value = value;
                                                   },
                                                   onDragDone: (details) {
-                                                    //TODO: 文件拖入路径后执行FASTBOOT flash *** ***
+                                                    List<XFile> files = details.files;
+                                                    //遍历文件列表
+                                                    for(XFile file in files) {
+                                                      variableCtrl.fbFlashFilePath.value = file.path;
+                                                    }
+                                                    Future doFlash() async{
+                                                      Navigator.pop(context);
+                                                      showWaitingDialog("或许在等待设备连接中...请稍后....");
+                                                      await fbFlashFile();
+                                                      Navigator.pop(context);
+                                                      showCustomDialog(variableCtrl.fbFlashOutput.value);
+                                                    }
+                                                    doFlash();
                                                   },
                                                 ),
                                                 actions: [
                                                   Button(
                                                     child: const Text('确认'),
                                                     onPressed: () {
-                                                      //TODO: 文件拖入路径后执行FASTBOOT flash *** ***
-                                                      Navigator.pop(context);
+                                                      Future doFlash() async{
+                                                        Navigator.pop(context);
+                                                        showWaitingDialog("或许在等待设备连接中...请稍后....");
+                                                        await fbFlashFile();
+                                                        Navigator.pop(context);
+                                                        showCustomDialog(variableCtrl.fbFlashOutput.value);
+                                                      }
+                                                      doFlash();
                                                       variableCtrl.partitionName.value = "";
                                                     },
                                                   ),
@@ -475,6 +493,21 @@ class HomepageState extends State<Homepage> {
             onPressed: () => Navigator.pop(context),
           ),
         ],
+      ),
+    );
+  }
+
+  void showWaitingDialog(String output){
+    showDialog(
+      context: context, 
+      builder: (context) => ContentDialog(
+        title: const Text('通知'),
+        content: Row(
+          children: [
+            const ProgressRing(),
+            Text(output,style: const TextStyle(fontSize: 18),)
+          ],
+        ),
       ),
     );
   }
