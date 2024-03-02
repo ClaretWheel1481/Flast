@@ -8,6 +8,7 @@ class variableController extends GetxController {
   var partitionName = "".obs;
   var uninstallApplicationPackageName = "".obs;
   var installApplicationPackageName = "".obs;
+  var adbSideloadFilePath = "".obs;
 }
 
 

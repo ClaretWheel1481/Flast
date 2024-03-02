@@ -6,7 +6,7 @@ import 'package:flast/variable.dart';
 import 'package:get/get.dart';
 import 'package:cross_file/cross_file.dart';
 
-variableController variablecon = variableController();
+variableController variableCtrl = variableController();
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -54,7 +54,7 @@ class HomepageState extends State<Homepage> {
                                       children: [
                                         Obx(()=>
                                           Text(
-                                            variablecon.connectedDevices.join('\n'),
+                                            variableCtrl.connectedDevices.join('\n'),
                                             style: const TextStyle(fontSize: 18),
                                           )
                                         )
@@ -70,23 +70,31 @@ class HomepageState extends State<Homepage> {
                                 );
                               }),
                               CustomHoverButton(title: "Sideload 侧载", onTap: (){
+                                //每次单击时清空变量避免不必要的错误
+                                variableCtrl.adbSideloadFilePath.value = "";
                                 showDialog(
                                   context: context,
                                   builder: (context) => ContentDialog(
                                     title: const Text('选择载入方式'),
                                     content: DropTargetSpace(
                                       onChanged: (value) {
-                                        
+                                        variableCtrl.adbSideloadFilePath.value = value;
                                       },
                                       onDragDone: (details) {
-                                        
+                                        List<XFile> files = details.files;
+                                        //遍历文件列表
+                                        for(XFile file in files) {
+                                          variableCtrl.adbSideloadFilePath.value = file.path;
+                                        }
+                                        adbSideload();
                                       },
                                     ),
                                     actions: [
                                       Button(
                                         child: const Text('确认'),
                                         onPressed: () {
-                                          //TODO: 文件拖入路径后执行ADB SIDELOAD
+                                          //TODO:错误处理待完善
+                                          adbSideload();
                                           Navigator.pop(context);
                                         },
                                       ),
@@ -103,19 +111,21 @@ class HomepageState extends State<Homepage> {
                           Row(
                             children: [
                               CustomHoverButton(title: "安装应用", onTap: (){
+                                //每次单击时清空变量避免不必要的错误
+                                variableCtrl.installApplicationPackageName.value = "";
                                 showDialog(
                                   context: context,
                                   builder: (context) => ContentDialog(
                                     title: const Text('选择载入方式'),
                                     content: DropTargetSpace(
                                       onChanged: (value) {
-                                        variablecon.installApplicationPackageName.value = value;
+                                        variableCtrl.installApplicationPackageName.value = value;
                                       },
                                       onDragDone: (details) {
                                         List<XFile> files = details.files;
                                         //遍历文件列表
                                         for(XFile file in files) {
-                                          variablecon.installApplicationPackageName.value = file.path;
+                                          variableCtrl.installApplicationPackageName.value = file.path;
                                         }
                                         adbInstall();
                                       },
@@ -124,6 +134,7 @@ class HomepageState extends State<Homepage> {
                                       Button(
                                         child: const Text('确认'),
                                         onPressed: () {
+                                          //TODO:错误处理待完善
                                           adbInstall();
                                           Navigator.pop(context);
                                         },
@@ -137,6 +148,8 @@ class HomepageState extends State<Homepage> {
                                 );
                               }),
                               CustomHoverButton(title: "卸载应用（需包名）", onTap: (){
+                                //每次单击时清空变量避免不必要的错误
+                                variableCtrl.uninstallApplicationPackageName.value = "";
                                 showDialog(
                                   context: context,
                                   builder: (context) => ContentDialog(
@@ -147,7 +160,7 @@ class HomepageState extends State<Homepage> {
                                         TextBox(
                                           placeholder: "应用完整包名",
                                           onChanged: (value){
-                                            variablecon.uninstallApplicationPackageName.value = value;
+                                            variableCtrl.uninstallApplicationPackageName.value = value;
                                           },
                                         ),
                                     ],),
@@ -155,7 +168,7 @@ class HomepageState extends State<Homepage> {
                                       Button(
                                         child: const Text('确认'),
                                         onPressed: () {
-                                          //TODO:错误处理待处理
+                                          //TODO:错误处理待完善
                                           adbUninstall();
                                           Navigator.pop(context);
                                         },
@@ -247,7 +260,7 @@ class HomepageState extends State<Homepage> {
                                         TextBox(
                                           placeholder: "分区名",
                                           onChanged: (value){
-                                            variablecon.partitionName.value = value;
+                                            variableCtrl.partitionName.value = value;
                                           },
                                         ),
                                     ],),
@@ -255,7 +268,7 @@ class HomepageState extends State<Homepage> {
                                       Button(
                                         child: const Text('确认'),
                                         onPressed: () {
-                                          if(variablecon.partitionName.value == ""){
+                                          if(variableCtrl.partitionName.value == ""){
                                             showDialog(
                                               context: context,
                                               builder: (context) => ContentDialog(
@@ -272,7 +285,7 @@ class HomepageState extends State<Homepage> {
                                                     child: const Text('关闭'),
                                                     onPressed: () {
                                                       Navigator.pop(context);
-                                                      variablecon.partitionName.value = "";
+                                                      variableCtrl.partitionName.value = "";
                                                     },
                                                   ),
                                                 ],
@@ -298,13 +311,13 @@ class HomepageState extends State<Homepage> {
                                                     onPressed: () {
                                                       //TODO: 文件拖入路径后执行FASTBOOT flash *** ***
                                                       Navigator.pop(context);
-                                                      variablecon.partitionName.value = "";
+                                                      variableCtrl.partitionName.value = "";
                                                     },
                                                   ),
                                                   Button(
                                                     child: const Text('取消'),
                                                     onPressed: () {
-                                                      variablecon.partitionName.value = "";
+                                                      variableCtrl.partitionName.value = "";
                                                       Navigator.pop(context);
                                                     },
                                                   ),
@@ -317,7 +330,7 @@ class HomepageState extends State<Homepage> {
                                       Button(
                                         child: const Text('取消'),
                                         onPressed: () {
-                                          variablecon.partitionName.value = "";
+                                          variableCtrl.partitionName.value = "";
                                           Navigator.pop(context);
                                         },
                                       ),

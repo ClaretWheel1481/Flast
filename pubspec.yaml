@@ -34,7 +34,7 @@ dependencies:
   fluentui_icons:
   bitsdojo_window:
   url_launcher:
-  process_run:
+  process_run: ^0.14.2
   desktop_drop:
   get:
   cross_file:
@@ -65,8 +65,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/tools/windows/
     - assets/tools/linux/
+    - assets/tools/windows/
 
   fonts:
     - family: MSYH

@@ -6,6 +6,10 @@ import 'package:flast/homepage.dart';
 import 'dart:io';
 
 //不同系统的adb工具路径
+//TODO:构建时需修改
+// const windowsAdbPath = "data/flutter_assets/assets/tools/windows/adb.exe";
+// const linuxAdbPath = "data/flutter_assets/assets/tools/linux/adb.exe";
+
 const windowsAdbPath = "assets/tools/windows/adb.exe";
 const linuxAdbPath = "assets/tools/linux/adb.exe";
 
@@ -32,14 +36,16 @@ Future adbDevices() async{
     adbPath = windowsAdbPath;
   }
   //执行ADB DEVICES
-  variablecon.connectedDevices.clear();
+  variableCtrl.connectedDevices.clear();
   final result = await run('$adbPath "devices"');
   final output = utf8.decode(utf8.encode(result[0].stdout));
   final lines = output.trim().split('\n');
-  variablecon.connectedDevices.addAll(lines.sublist(1));
+  variableCtrl.connectedDevices.addAll(lines.sublist(1));
 }
 
+//adb uninstall ***命令执行方法
 Future adbUninstall() async{
+  var output = "";
   //根据系统不同更换工具路径
   var adbPath = "";
   if (Platform.isLinux) {
@@ -47,14 +53,24 @@ Future adbUninstall() async{
   } else if (Platform.isWindows) {
     adbPath = windowsAdbPath;
   }
-  final result = await run('$adbPath "uninstall" ${variablecon.uninstallApplicationPackageName}');
-  final output = utf8.decode(utf8.encode(result[0].stdout));
+  final result = await run('$adbPath "uninstall" ${variableCtrl.uninstallApplicationPackageName.value}',throwOnError: false);
+  output = utf8.decode(utf8.encode(result[0].stdout));
+  if(result[0].stdout == ""){
+    output = utf8.decode(utf8.encode(result[0].stderr));
+  }else{
+    output = utf8.decode(utf8.encode(result[0].stdout));
+  }
+  print(output);
   if(output == "Success"){
     //TODO:功能实现后反馈待处理
+  }else{
+    //TODO:功能未实现错误反馈待处理 
   }
 }
 
+//adb install ***命令执行方法
 Future adbInstall() async{
+  var output = "";
   //根据系统不同更换工具路径
   var adbPath = "";
   if (Platform.isLinux) {
@@ -62,9 +78,41 @@ Future adbInstall() async{
   } else if (Platform.isWindows) {
     adbPath = windowsAdbPath;
   }
-  final result = await run('$adbPath "install" ${variablecon.installApplicationPackageName}');
-  final output = utf8.decode(utf8.encode(result[0].stdout));
+  final result = await run('$adbPath "install" ${variableCtrl.installApplicationPackageName}',throwOnError: false);
+  output = utf8.decode(utf8.encode(result[0].stdout));
+  if(result[0].stdout == ""){
+    output = utf8.decode(utf8.encode(result[0].stderr));
+  }else{
+    output = utf8.decode(utf8.encode(result[0].stdout));
+  }
+  print(output);
   if(output == "Success"){
     //TODO:功能实现后反馈待处理
+  }else{
+    //TODO:功能未实现错误反馈待处理 
+  }
+}
+
+//adb sideload ***命令执行方法
+Future adbSideload() async{
+  var output = "";
+  //根据系统不同更换工具路径
+  var adbPath = "";
+  if (Platform.isLinux) {
+    adbPath = linuxAdbPath;
+  } else if (Platform.isWindows) {
+    adbPath = windowsAdbPath;
+  }
+  final result = await run('$adbPath "sideload" ${variableCtrl.adbSideloadFilePath}',throwOnError: false);
+  if(result[0].stdout == ""){
+    output = utf8.decode(utf8.encode(result[0].stderr));
+  }else{
+    output = utf8.decode(utf8.encode(result[0].stdout));
+  }
+  print(output);
+  if(output == "Success"){
+    //TODO:功能实现后反馈待处理
+  }else{
+    //TODO:功能未实现错误反馈待处理 
   }
 }
