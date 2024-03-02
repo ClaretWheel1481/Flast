@@ -88,6 +88,7 @@ class HomepageState extends State<Homepage> {
                                           variableCtrl.adbSideloadFilePath.value = file.path;
                                         }
                                         Future doSideload() async{
+                                          //TODO:Sideload进度条待完善
                                           await adbSideload();
                                           Navigator.pop(context);
                                           showCustomDialog(variableCtrl.sideloadOutput.value);
@@ -100,6 +101,7 @@ class HomepageState extends State<Homepage> {
                                         child: const Text('确认'),
                                         onPressed: () {
                                           Future doSideload() async{
+                                            //TODO:Sideload进度条待完善
                                             await adbSideload();
                                             Navigator.pop(context);
                                             showCustomDialog(variableCtrl.sideloadOutput.value);
@@ -137,6 +139,7 @@ class HomepageState extends State<Homepage> {
                                           variableCtrl.installApplicationPackageName.value = file.path;
                                         }
                                         Future doInstall() async{
+                                          showWaitingDialog("安装中...请查看系统是否提示安装消息。");
                                           await adbInstall();
                                           Navigator.pop(context);
                                           showCustomDialog(variableCtrl.installOutput.value);
@@ -149,6 +152,7 @@ class HomepageState extends State<Homepage> {
                                         child: const Text('确认'),
                                         onPressed: () {
                                           Future doInstall() async{
+                                            showWaitingDialog("安装中...请查看系统是否提示安装消息。");
                                             await adbInstall();
                                             Navigator.pop(context);
                                             showCustomDialog(variableCtrl.installOutput.value);
@@ -186,6 +190,7 @@ class HomepageState extends State<Homepage> {
                                         child: const Text('确认'),
                                         onPressed: () {
                                           Future doUninstall() async{
+                                            showWaitingDialog("卸载中...请稍后...");
                                             await adbUninstall();
                                             Navigator.pop(context);
                                             showCustomDialog(variableCtrl.uninstallOutput.value);
@@ -215,24 +220,27 @@ class HomepageState extends State<Homepage> {
                                         Button(
                                           child: const Text('Recovery'),
                                             onPressed: () {
-                                              //TODO: 重启至Recovery
+                                              adbReboot("Recovery");
                                               Navigator.pop(context);
+                                              showCustomDialog("已重启至Recovery，请自行确认是否成功。");
                                             },
                                         ),
                                         const SizedBox(width: 10),
                                         Button(
                                           child: const Text('System'),
                                             onPressed: () {
-                                              //TODO: 重启至系统
+                                              adbReboot("system");
                                               Navigator.pop(context);
+                                              showCustomDialog("已重启至系统，请自行确认是否成功。");
                                             },
                                         ),
                                         const SizedBox(width: 10),
                                         Button(
                                           child: const Text('Bootloader'),
                                             onPressed: () {
-                                              //TODO: 重启至Bootloader
+                                              adbReboot("bootloader");
                                               Navigator.pop(context);
+                                              showCustomDialog("已重启至Bootloader，请自行确认是否成功。");
                                             },
                                         ),
                                       ],
@@ -442,7 +450,9 @@ class HomepageState extends State<Homepage> {
                                           child: const Text('Recovery'),
                                             onPressed: () {
                                               //TODO: 重启至Recovery
+                                              fbReboot("Recovery");
                                               Navigator.pop(context);
+                                              showCustomDialog("已重启至Recovery，请自行确认是否成功。");
                                             },
                                         ),
                                         const SizedBox(width: 10),
@@ -450,7 +460,9 @@ class HomepageState extends State<Homepage> {
                                           child: const Text('System'),
                                             onPressed: () {
                                               //TODO: 重启至系统
+                                              fbReboot("");
                                               Navigator.pop(context);
+                                              showCustomDialog("已重启至系统，请自行确认是否成功。");
                                             },
                                         ),
                                       ],
@@ -501,13 +513,16 @@ class HomepageState extends State<Homepage> {
     showDialog(
       context: context, 
       builder: (context) => ContentDialog(
-        title: const Text('通知'),
-        content: Row(
+        title: const Row(children: [
+          Text("通知"),
+          ProgressRing(),
+        ],),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const ProgressRing(),
-            Text(output,style: const TextStyle(fontSize: 18),)
+            Text(output,style: const TextStyle(fontSize: 18)),
           ],
-        ),
+        )
       ),
     );
   }

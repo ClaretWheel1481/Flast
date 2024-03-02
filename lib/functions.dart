@@ -108,6 +108,18 @@ Future adbSideload() async{
   variableCtrl.sideloadOutput.value = output;
 }
 
+//adb reboot ***命令执行方法
+Future adbReboot(String partion) async{
+  //根据系统不同更换工具路径
+  var adbPath = "";
+  if (Platform.isLinux) {
+    adbPath = linuxAdbPath;
+  } else if (Platform.isWindows) {
+    adbPath = windowsAdbPath;
+  }
+  await run('$adbPath "reboot" $partion',throwOnError: false);
+}
+
 //FASTBOOT DEVICES命令执行方法
 Future fbDevices() async{
   //根据系统不同更换工具路径
@@ -122,7 +134,7 @@ Future fbDevices() async{
   final result = await run('$fbPath "devices"');
   final output = utf8.decode(utf8.encode(result[0].stdout));
   final lines = output.trim().split('\n');
-  variableCtrl.fbConnectedDevices.addAll(lines.sublist(1));
+  variableCtrl.fbConnectedDevices.addAll(lines);
 }
 
 //FASTBOOT FLASH ** **命令执行方法
@@ -142,4 +154,16 @@ Future fbFlashFile() async{
     output = utf8.decode(utf8.encode(result[0].stdout));
   }
   variableCtrl.fbFlashOutput.value = output;
+}
+
+//fastboot reboot ***命令执行方法
+Future fbReboot(String partion) async{
+  //根据系统不同更换工具路径
+  var fbPath = "";
+  if (Platform.isLinux) {
+    fbPath = linuxFastbootPath;
+  } else if (Platform.isWindows) {
+    fbPath = windowsFastbootPath;
+  }
+  await run('$fbPath "reboot" $partion',throwOnError: false);
 }
