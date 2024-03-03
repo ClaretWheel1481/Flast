@@ -1,5 +1,6 @@
-import 'package:flast/homepage.dart';
-import 'package:flast/settings.dart';
+import 'package:flast/pages/apps.dart';
+import 'package:flast/pages/homepage.dart';
+import 'package:flast/pages/settings.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 
@@ -19,6 +20,11 @@ class HomeState extends State<Home> {
       icon: const Icon(FluentIcons.home),
       title: const Text("主页"),
       body: const Homepage(),
+    ),
+    PaneItem(
+      icon: const Icon(FluentIcons.all_apps),
+      title: const Text("进程管理"),
+      body: const Apps(),
     ),
     PaneItem(
       icon: const Icon(FluentIcons.settings),

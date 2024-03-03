@@ -2,7 +2,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:process_run/process_run.dart';
 import 'dart:convert';
-import 'package:flast/homepage.dart';
+import 'package:flast/pages/homepage.dart';
 import 'dart:io';
 
 //不同系统的工具路径
@@ -118,6 +118,25 @@ Future adbReboot(String partion) async{
     adbPath = windowsAdbPath;
   }
   await run('$adbPath "reboot" $partion',throwOnError: false);
+}
+
+//获取所有应用
+Future adbGetAllApps() async{
+  //根据系统不同更换工具路径
+  var adbPath = "";
+  if (Platform.isLinux) {
+    adbPath = linuxAdbPath;
+  } else if (Platform.isWindows) {
+    adbPath = windowsAdbPath;
+  }
+  
+  //执行命令
+  variableCtrl.systemAllApps.clear();
+  final result = await run('$adbPath shell top -m 5 -d 1',throwOnError: false);
+  final output = utf8.decode(utf8.encode(result[0].stdout));
+  final lines = output.trim().split('\n');
+  variableCtrl.systemAllApps.addAll(lines.sublist(1));
+  print(variableCtrl.systemAllApps);
 }
 
 //FASTBOOT DEVICES命令执行方法

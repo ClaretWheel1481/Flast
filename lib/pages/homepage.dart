@@ -449,7 +449,6 @@ class HomepageState extends State<Homepage> {
                                         Button(
                                           child: const Text('Recovery'),
                                             onPressed: () {
-                                              //TODO: 重启至Recovery
                                               fbReboot("Recovery");
                                               Navigator.pop(context);
                                               showCustomDialog("已重启至Recovery，请自行确认是否成功。");
@@ -459,7 +458,6 @@ class HomepageState extends State<Homepage> {
                                         Button(
                                           child: const Text('System'),
                                             onPressed: () {
-                                              //TODO: 重启至系统
                                               fbReboot("");
                                               Navigator.pop(context);
                                               showCustomDialog("已重启至系统，请自行确认是否成功。");

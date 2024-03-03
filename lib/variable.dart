@@ -8,6 +8,10 @@ class VariableController extends GetxController {
   List<dynamic> fbConnectedDevices = [
 
   ].obs;
+
+  List<dynamic> systemAllApps = [
+
+  ].obs;
   
   var partitionName = "".obs;
   var uninstallApplicationPackageName = "".obs;
