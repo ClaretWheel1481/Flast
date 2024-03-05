@@ -7,7 +7,7 @@ import 'dart:io';
 
 //不同系统的工具路径
 
-//TODO:构建时需修改
+//TODO:构建时需替换到data/flutter_assets/assets/...
 
 // const windowsAdbPath = "data/flutter_assets/assets/tools/windows/adb.exe";
 // const linuxAdbPath = "data/flutter_assets/assets/tools/linux/adb.exe";
@@ -136,7 +136,6 @@ Future adbGetAllApps() async{
   final output = utf8.decode(utf8.encode(result[0].stdout));
   final lines = output.trim().split('\n');
   variableCtrl.systemAllApps.addAll(lines.sublist(1));
-  print(variableCtrl.systemAllApps);
 }
 
 //FASTBOOT DEVICES命令执行方法

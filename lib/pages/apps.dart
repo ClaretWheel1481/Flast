@@ -22,9 +22,28 @@ class AppsState extends State<Apps> {
               child: const Text("进程管理",style: TextStyle(fontSize: 40,fontWeight: FontWeight.w500)),
             ),
             const SizedBox(height: 20),
-            FilledButton(child: Text("嘻嘻"), onPressed: (){
-              adbGetAllApps();
-            })
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(left: 25,right: 5),
+                  child: FilledButton(
+                    child: const Text("开启监测"), 
+                    onPressed: (){
+                      adbGetAllApps();
+                    }
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 25,right: 15),
+                  child: Button(
+                    child: const Text("停止监测"), 
+                    onPressed: (){
+                      //TODO:监测停止待处理
+                    }
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ]

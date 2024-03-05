@@ -23,6 +23,7 @@ class VariableController extends GetxController {
   var installOutput = "".obs;
   var sideloadOutput = "".obs;
   var fbFlashOutput = "".obs;
+  var systemAllAppsOutput = "".obs;
 }
 
 
