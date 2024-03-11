@@ -31,8 +31,8 @@ class AppsState extends State<Apps> {
                     child: const Text("开启监测"), 
                     onPressed: (){
                       adbGetAllApps();
-                      if(variableCtrl.systemAllAppsOutput.value.trim() == "adb.exe: no devices/emulators found"){
-                        showCustomDialog(variableCtrl.systemAllAppsOutput.value);
+                      if(variableCtrl.OutputLog.value.compareTo("adb.exe: no devices/emulators found") == 1){
+                        showCustomDialog(variableCtrl.OutputLog.value);
                       }
                       //TODO:实时监测待处理
                     }

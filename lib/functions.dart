@@ -66,7 +66,7 @@ Future adbUninstall() async{
   }else{
     output = utf8.decode(utf8.encode(result[0].stdout));
   }
-  variableCtrl.uninstallOutput.value = output;
+  variableCtrl.OutputLog.value = output;
 }
 
 //adb install ***命令执行方法
@@ -86,7 +86,7 @@ Future adbInstall() async{
   }else{
     output = utf8.decode(utf8.encode(result[0].stdout));
   }
-  variableCtrl.installOutput.value = output;
+  variableCtrl.OutputLog.value = output;
 }
 
 //adb sideload ***命令执行方法
@@ -105,7 +105,7 @@ Future adbSideload() async{
   }else{
     output = utf8.decode(utf8.encode(result[0].stdout));
   }
-  variableCtrl.sideloadOutput.value = output;
+  variableCtrl.OutputLog.value = output;
 }
 
 //adb reboot ***命令执行方法
@@ -140,7 +140,7 @@ Future adbGetAllApps() async{
   }else{
     output = utf8.decode(utf8.encode(result[0].stdout));
   }
-  variableCtrl.systemAllAppsOutput.value = output;
+  variableCtrl.OutputLog.value = output;
   final lines = output.trim().split('\n');
   variableCtrl.systemAllApps.addAll(lines);
 }
@@ -178,7 +178,7 @@ Future fbFlashFile() async{
   }else{
     output = utf8.decode(utf8.encode(result[0].stdout));
   }
-  variableCtrl.fbFlashOutput.value = output;
+  variableCtrl.OutputLog.value = output;
 }
 
 //fastboot reboot ***命令执行方法

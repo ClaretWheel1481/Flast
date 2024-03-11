@@ -29,7 +29,7 @@ class SettingsState extends State<Settings> {
             const SizedBox(height: 15),
             Container(
               padding: const EdgeInsets.only(left: 30),
-              child: const Text("Flast 0.0.1",style: TextStyle(fontSize: 13)),
+              child: const Text("Flast 0.1",style: TextStyle(fontSize: 13)),
             ),
             const SizedBox(height: 25),
             Container(

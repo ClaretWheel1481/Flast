@@ -91,7 +91,7 @@ class HomepageState extends State<Homepage> {
                                           //TODO:Sideload进度条待完善
                                           await adbSideload();
                                           Navigator.pop(context);
-                                          showCustomDialog(variableCtrl.sideloadOutput.value);
+                                          showCustomDialog(variableCtrl.OutputLog.value);
                                         }
                                         doSideload();
                                       },
@@ -104,7 +104,7 @@ class HomepageState extends State<Homepage> {
                                             //TODO:Sideload进度条待完善
                                             await adbSideload();
                                             Navigator.pop(context);
-                                            showCustomDialog(variableCtrl.sideloadOutput.value);
+                                            showCustomDialog(variableCtrl.OutputLog.value);
                                           }
                                           doSideload();
                                         },
@@ -142,7 +142,7 @@ class HomepageState extends State<Homepage> {
                                           showWaitingDialog("安装中...请查看系统是否提示安装消息。");
                                           await adbInstall();
                                           Navigator.pop(context);
-                                          showCustomDialog(variableCtrl.installOutput.value);
+                                          showCustomDialog(variableCtrl.OutputLog.value);
                                         }
                                         doInstall();
                                       },
@@ -155,7 +155,7 @@ class HomepageState extends State<Homepage> {
                                             showWaitingDialog("安装中...请查看系统是否提示安装消息。");
                                             await adbInstall();
                                             Navigator.pop(context);
-                                            showCustomDialog(variableCtrl.installOutput.value);
+                                            showCustomDialog(variableCtrl.OutputLog.value);
                                           }
                                           doInstall();
                                         },
@@ -193,7 +193,7 @@ class HomepageState extends State<Homepage> {
                                             showWaitingDialog("卸载中...请稍后...");
                                             await adbUninstall();
                                             Navigator.pop(context);
-                                            showCustomDialog(variableCtrl.uninstallOutput.value);
+                                            showCustomDialog(variableCtrl.OutputLog.value);
                                           }
                                           doUninstall();
                                         },
@@ -390,7 +390,7 @@ class HomepageState extends State<Homepage> {
                                                       showWaitingDialog("或许在等待设备连接中...请稍后....");
                                                       await fbFlashFile();
                                                       Navigator.pop(context);
-                                                      showCustomDialog(variableCtrl.fbFlashOutput.value);
+                                                      showCustomDialog(variableCtrl.OutputLog.value);
                                                     }
                                                     doFlash();
                                                   },
@@ -403,7 +403,7 @@ class HomepageState extends State<Homepage> {
                                                         showWaitingDialog("或许在等待设备连接中...请稍后....");
                                                         await fbFlashFile();
                                                         Navigator.pop(context);
-                                                        showCustomDialog(variableCtrl.fbFlashOutput.value);
+                                                        showCustomDialog(variableCtrl.OutputLog.value);
                                                       }
                                                       doFlash();
                                                       variableCtrl.partitionName.value = "";
@@ -449,7 +449,7 @@ class HomepageState extends State<Homepage> {
                                             onPressed: () {
                                               fbReboot("Recovery");
                                               Navigator.pop(context);
-                                              showCustomDialog("已重启至Recovery，请自行确认是否成功。");
+                                              showCustomDialog("已重启至Recovery，请自行确认是否成功。\n若没反应请检查手机是否连接成功！");
                                             },
                                         ),
                                         const SizedBox(width: 10),
@@ -458,7 +458,7 @@ class HomepageState extends State<Homepage> {
                                             onPressed: () {
                                               fbReboot("");
                                               Navigator.pop(context);
-                                              showCustomDialog("已重启至系统，请自行确认是否成功。");
+                                              showCustomDialog("已重启至系统，请自行确认是否成功。\n若没反应请检查手机是否连接成功！");
                                             },
                                         ),
                                       ],

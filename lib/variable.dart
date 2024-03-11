@@ -13,17 +13,13 @@ class VariableController extends GetxController {
 
   ].obs;
   
-  var partitionName = "".obs;
-  var uninstallApplicationPackageName = "".obs;
-  var installApplicationPackageName = "".obs;
-  var adbSideloadFilePath = "".obs;
-  var fbFlashFilePath = "".obs;
+  var partitionName = "".obs;   //刷入的分区名称
+  var uninstallApplicationPackageName = "".obs;   //卸载的包名
+  var installApplicationPackageName = "".obs;   //安装的包名
+  var adbSideloadFilePath = "".obs;   //Sideload文件路径
+  var fbFlashFilePath = "".obs;   //Fastboot刷入的分区的文件路径
 
-  var uninstallOutput = "".obs;
-  var installOutput = "".obs;
-  var sideloadOutput = "".obs;
-  var fbFlashOutput = "".obs;
-  var systemAllAppsOutput = "".obs;
+  var OutputLog = "".obs;   //输出
 }
 
 
