@@ -12,7 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-  int selectedindex = 0;
+  int selectedIndex = 0;  //用于页面跳转
 
   final List<NavigationPaneItem> panelItems = [
     PaneItemSeparator(),
@@ -71,9 +71,9 @@ class HomeState extends State<Home> {
           openWidth: 150
         ),
         onChanged: (index) => setState(() {
-          selectedindex = index;
+          selectedIndex = index;
         }),
-        selected: selectedindex,
+        selected: selectedIndex,
       ),
     );
   }

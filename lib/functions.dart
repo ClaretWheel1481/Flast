@@ -122,6 +122,7 @@ Future adbReboot(String partion) async{
 
 //获取所有应用
 Future adbGetAllApps() async{
+  var output = "";
   //根据系统不同更换工具路径
   var adbPath = "";
   if (Platform.isLinux) {
@@ -133,9 +134,15 @@ Future adbGetAllApps() async{
   //执行命令
   variableCtrl.systemAllApps.clear();
   final result = await run('$adbPath shell top -m 5 -d 1',throwOnError: false);
-  final output = utf8.decode(utf8.encode(result[0].stdout));
+  output = utf8.decode(utf8.encode(result[0].stdout));
+  if(result[0].stdout == ""){
+    output = utf8.decode(utf8.encode(result[0].stderr));
+  }else{
+    output = utf8.decode(utf8.encode(result[0].stdout));
+  }
+  variableCtrl.systemAllAppsOutput.value = output;
   final lines = output.trim().split('\n');
-  variableCtrl.systemAllApps.addAll(lines.sublist(1));
+  variableCtrl.systemAllApps.addAll(lines);
 }
 
 //FASTBOOT DEVICES命令执行方法

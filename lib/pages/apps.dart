@@ -1,4 +1,5 @@
 import 'package:flast/functions.dart';
+import 'package:flast/pages/homepage.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 class Apps extends StatefulWidget {
@@ -30,6 +31,10 @@ class AppsState extends State<Apps> {
                     child: const Text("开启监测"), 
                     onPressed: (){
                       adbGetAllApps();
+                      if(variableCtrl.systemAllAppsOutput.value.trim() == "adb.exe: no devices/emulators found"){
+                        showCustomDialog(variableCtrl.systemAllAppsOutput.value);
+                      }
+                      //TODO:实时监测待处理
                     }
                   ),
                 ),
@@ -47,6 +52,27 @@ class AppsState extends State<Apps> {
           ],
         ),
       ]
+    );
+  }
+
+  void showCustomDialog(String output){
+    showDialog(
+      context: context, 
+      builder: (context) => ContentDialog(
+        title: const Text('通知'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(output,style: const TextStyle(fontSize: 18),)
+          ],
+        ),
+        actions: [
+          Button(
+            child: const Text('关闭'),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
     );
   }
 }

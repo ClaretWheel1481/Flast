@@ -387,7 +387,6 @@ class HomepageState extends State<Homepage> {
                                                       variableCtrl.fbFlashFilePath.value = file.path;
                                                     }
                                                     Future doFlash() async{
-                                                      Navigator.pop(context);
                                                       showWaitingDialog("或许在等待设备连接中...请稍后....");
                                                       await fbFlashFile();
                                                       Navigator.pop(context);
@@ -401,7 +400,6 @@ class HomepageState extends State<Homepage> {
                                                     child: const Text('确认'),
                                                     onPressed: () {
                                                       Future doFlash() async{
-                                                        Navigator.pop(context);
                                                         showWaitingDialog("或许在等待设备连接中...请稍后....");
                                                         await fbFlashFile();
                                                         Navigator.pop(context);
